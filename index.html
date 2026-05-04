@@ -1205,7 +1205,6 @@
     .nav-links { display: none; }
     .menu-toggle { display: block; }
     .nav-cta { padding: 0.5rem 1rem; font-size: 0.85rem; }
-    .nav-cta-secondary { display: none; }
     .hero { padding: 7rem 1.5rem 3rem; }
     .hero-inner { grid-template-columns: 1fr; gap: 2.5rem; }
     .hero-gallery {
@@ -1320,6 +1319,40 @@
     .despre-values { grid-template-columns: 1fr; }
     .footer-inner { grid-template-columns: 1fr; }
   }
+
+  @media (max-width: 920px) {
+  .nav-links {
+    display: none; /* Ascuns implicit pe mobil */
+    flex-direction: column;
+    position: absolute;
+    top: 100%; /* Apare imediat sub nav */
+    left: 0;
+    width: 100%;
+    background: white;
+    padding: 2rem;
+    border-bottom: 1px solid var(--line);
+    gap: 1.5rem;
+  }
+
+  /* Când clasa .active este adăugată de JS, afișăm meniul */
+  .nav-links.active {
+    display: flex;
+  }
+
+  .menu-toggle {
+    display: block; /* Arătăm butonul de tip hamburger */
+  }
+}
+
+.menu-toggle.open span:nth-child(1) {
+  transform: translateY(7px) rotate(45deg);
+}
+.menu-toggle.open span:nth-child(2) {
+  opacity: 0;
+}
+.menu-toggle.open span:nth-child(3) {
+  transform: translateY(-7px) rotate(-45deg);
+}
 </style>
 </head>
 <body>
@@ -1935,6 +1968,27 @@
     // Pentru Servicii Medicale
     setupCarousel('serviciiCarousel', '#serviciiProgress .progress-dot', 'serviciiPrev', 'serviciiNext');
   });
+
+  document.addEventListener('DOMContentLoaded', () => {
+  const menuToggle = document.querySelector('.menu-toggle');
+  const navLinks = document.querySelector('.nav-links');
+
+  menuToggle.addEventListener('click', () => {
+    // Schimbăm starea meniului
+    navLinks.classList.toggle('active');
+    
+    // Animație opțională pentru liniile butonului (X)
+    menuToggle.classList.toggle('open');
+  });
+
+  // Închidem meniul automat când se dă click pe un link
+  document.querySelectorAll('.nav-links a').forEach(link => {
+    link.addEventListener('click', () => {
+      navLinks.classList.remove('active');
+      menuToggle.classList.remove('open');
+    });
+  });
+});
 </script>
 
 </body>

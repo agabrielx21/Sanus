@@ -1,0 +1,1836 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sanus CLINIC — Servicii medicale complete în București și Mavrodin</title>
+<meta name="description" content="Sanus CLINIC oferă servicii medicale complete: recuperare medicală, medicină internă, ecografie și analize de laborator în București (Crângași) și Mavrodin.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..700;1,9..144,400&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bleu-50:  #f4f8fb;
+    --bleu-100: #e6eff5;
+    --bleu-200: #cfdfeb;
+    --bleu-300: #a8c4d8;
+    --bleu-400: #7ba3bf;
+    --bleu-500: #4f7e9d;
+    --bleu-600: #3a6280;
+    --bleu-700: #2a4860;
+    --bleu-900: #14283a;
+
+    --warm-50:  #fbf5ef;
+    --warm-100: #f5e6d3;
+    --warm-200: #ecceaa;
+    --warm-300: #e0a578;
+    --warm-400: #c97a4f;
+    --warm-500: #a85c3a;
+
+    --ink:      #1a2a3a;
+    --ink-soft: #4a5b6c;
+    --paper:    #fafbfc;
+    --line:     rgba(26, 42, 58, 0.08);
+
+    --display: 'Fraunces', Georgia, serif;
+    --body: 'Outfit', system-ui, sans-serif;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: var(--body);
+    color: var(--ink);
+    background: var(--paper);
+    line-height: 1.6;
+    font-weight: 400;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+
+  ::selection { background: var(--warm-200); color: var(--bleu-900); }
+
+  /* ---------- NAV ---------- */
+  .nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    padding: 1.25rem 2rem;
+    background: rgba(250, 251, 252, 0.85);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--line);
+    transition: padding 0.3s ease;
+  }
+  .nav-inner {
+    max-width: 1280px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .logo {
+    font-family: var(--display);
+    font-size: 1.4rem;
+    font-weight: 500;
+    letter-spacing: 0.02em;
+    color: var(--bleu-900);
+    display: flex;
+    align-items: center;
+    gap: 0.65rem;
+    text-decoration: none;
+  }
+  .logo-svg {
+    width: 38px;
+    height: 38px;
+    flex-shrink: 0;
+  }
+  .logo-text {
+    display: flex;
+    flex-direction: column;
+    line-height: 1;
+  }
+  .logo-text .brand {
+    font-family: var(--display);
+    font-weight: 600;
+    font-size: 1.25rem;
+    letter-spacing: 0.08em;
+    color: var(--bleu-900);
+  }
+  .logo-text .sub {
+    font-family: var(--body);
+    font-size: 0.65rem;
+    font-weight: 400;
+    letter-spacing: 0.45em;
+    color: var(--warm-500);
+    text-transform: uppercase;
+    margin-top: 3px;
+    padding-top: 3px;
+    border-top: 1px solid var(--warm-200);
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 2.5rem;
+    list-style: none;
+    font-size: 0.95rem;
+  }
+  .nav-links a {
+    color: var(--ink-soft);
+    text-decoration: none;
+    transition: color 0.2s;
+    position: relative;
+  }
+  .nav-links a::after {
+    content: '';
+    position: absolute;
+    bottom: -4px; left: 0;
+    width: 0; height: 1px;
+    background: var(--warm-400);
+    transition: width 0.3s ease;
+  }
+  .nav-links a:hover { color: var(--bleu-900); }
+  .nav-links a:hover::after { width: 100%; }
+
+  .nav-actions {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+  }
+  .nav-cta {
+    padding: 0.6rem 1.4rem;
+    background: var(--bleu-700);
+    color: var(--paper);
+    text-decoration: none;
+    border-radius: 999px;
+    font-size: 0.9rem;
+    font-weight: 500;
+    transition: all 0.2s;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  .nav-cta:hover { background: var(--warm-400); transform: translateY(-1px); }
+
+  .nav-cta-secondary {
+    background: transparent;
+    color: var(--bleu-900);
+    border: 1px solid var(--bleu-300);
+  }
+  .nav-cta-secondary:hover {
+    background: var(--bleu-100);
+    border-color: var(--bleu-400);
+    color: var(--bleu-900);
+    transform: translateY(-1px);
+  }
+
+  .menu-toggle { display: none; background: none; border: none; cursor: pointer; padding: 0.5rem; }
+  .menu-toggle span {
+    display: block; width: 24px; height: 2px; background: var(--bleu-900);
+    margin: 5px 0; transition: all 0.3s;
+  }
+
+  /* ---------- HERO ---------- */
+  .hero {
+    min-height: 100vh;
+    padding: 9rem 2rem 4rem;
+    background: linear-gradient(180deg, var(--bleu-50) 0%, var(--paper) 100%);
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: -10%; right: -10%;
+    width: 600px; height: 600px;
+    background: radial-gradient(circle, rgba(232, 206, 170, 0.3) 0%, transparent 70%);
+    border-radius: 50%;
+    z-index: 0;
+  }
+  .hero::after {
+    content: '';
+    position: absolute;
+    bottom: -20%; left: -15%;
+    width: 700px; height: 700px;
+    background: radial-gradient(circle, rgba(168, 196, 216, 0.25) 0%, transparent 70%);
+    border-radius: 50%;
+    z-index: 0;
+  }
+  .hero-inner {
+    max-width: 1280px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1.05fr 0.95fr;
+    gap: 4rem;
+    align-items: center;
+    position: relative;
+    z-index: 1;
+  }
+  .eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.75rem;
+    font-size: 0.85rem;
+    font-weight: 500;
+    color: var(--warm-500);
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    margin-bottom: 1.5rem;
+  }
+  .eyebrow::before {
+    content: '';
+    width: 32px; height: 1px;
+    background: var(--warm-400);
+  }
+
+  .hero h1 {
+    font-family: var(--display);
+    font-size: clamp(2.5rem, 5.5vw, 4.5rem);
+    font-weight: 400;
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+    color: var(--bleu-900);
+    margin-bottom: 1.5rem;
+  }
+  .hero h1 em {
+    font-style: italic;
+    color: var(--warm-400);
+    font-weight: 300;
+  }
+  .hero .lead {
+    font-size: 1.15rem;
+    color: var(--ink-soft);
+    max-width: 520px;
+    margin-bottom: 2.5rem;
+    line-height: 1.7;
+  }
+  .hero-actions { display: flex; gap: 1rem; flex-wrap: wrap; }
+  .btn-primary, .btn-secondary {
+    padding: 0.95rem 1.75rem;
+    border-radius: 999px;
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 0.95rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    transition: all 0.25s ease;
+    border: 1px solid transparent;
+  }
+  .btn-primary {
+    background: var(--bleu-700);
+    color: var(--paper);
+  }
+  .btn-primary:hover {
+    background: var(--bleu-900);
+    transform: translateY(-2px);
+    box-shadow: 0 12px 24px -8px rgba(20, 40, 58, 0.3);
+  }
+  .btn-secondary {
+    background: transparent;
+    color: var(--bleu-900);
+    border-color: var(--bleu-300);
+  }
+  .btn-secondary:hover {
+    border-color: var(--warm-400);
+    color: var(--warm-500);
+  }
+
+  .hero-visual {
+    position: relative;
+    width: 100%;
+  }
+  .hero-gallery {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 200px 200px;
+    gap: 1rem;
+    position: relative;
+  }
+  .hero-photo {
+    position: relative;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 16px 32px -12px rgba(20, 40, 58, 0.15);
+    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .hero-photo:hover { transform: translateY(-4px); }
+  .hero-photo img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+  .hero-photo-1 {
+    grid-column: 1 / 2;
+    grid-row: 1 / 3;
+    border-radius: 20px 20px 60px 20px;
+  }
+  .hero-photo-2 {
+    grid-column: 2 / 3;
+    grid-row: 1 / 2;
+  }
+  .hero-photo-3 {
+    grid-column: 2 / 3;
+    grid-row: 2 / 3;
+    border-radius: 20px 60px 20px 20px;
+  }
+  .hero-photo-badge {
+    position: absolute;
+    bottom: 1rem;
+    left: 1rem;
+    background: rgba(255,255,255,0.95);
+    backdrop-filter: blur(10px);
+    padding: 0.5rem 0.9rem;
+    border-radius: 999px;
+    font-size: 0.75rem;
+    font-weight: 500;
+    color: var(--bleu-900);
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+  }
+  .hero-photo-badge::before {
+    content: '';
+    width: 6px; height: 6px;
+    background: var(--warm-400);
+    border-radius: 50%;
+  }
+
+  /* ---------- SECTIONS GENERIC ---------- */
+  section { padding: 6rem 2rem; position: relative; }
+  .container { max-width: 1280px; margin: 0 auto; }
+  .section-head {
+    max-width: 720px;
+    margin: 0 auto 4rem;
+    text-align: center;
+  }
+  .section-head h2 {
+    font-family: var(--display);
+    font-size: clamp(2rem, 4vw, 3rem);
+    font-weight: 400;
+    letter-spacing: -0.02em;
+    line-height: 1.1;
+    color: var(--bleu-900);
+    margin-bottom: 1rem;
+  }
+  .section-head h2 em { font-style: italic; color: var(--warm-400); }
+  .section-head p {
+    color: var(--ink-soft);
+    font-size: 1.1rem;
+    line-height: 1.7;
+  }
+
+  /* ---------- PACHETE PROMOTIONALE ---------- */
+  .pachete {
+    background: var(--paper);
+    padding-top: 5rem;
+    padding-bottom: 5rem;
+  }
+  .pachete-head {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 2rem;
+    margin-bottom: 3rem;
+    flex-wrap: wrap;
+  }
+  .pachete-head .head-text { max-width: 600px; }
+  .pachete-head h2 {
+    font-family: var(--display);
+    font-size: clamp(2rem, 4vw, 3rem);
+    font-weight: 400;
+    letter-spacing: -0.02em;
+    line-height: 1.1;
+    color: var(--bleu-900);
+    margin-bottom: 0.75rem;
+  }
+  .pachete-head h2 em { font-style: italic; color: var(--warm-400); }
+  .pachete-head p { color: var(--ink-soft); font-size: 1.05rem; }
+  .pachete-cta-call {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    padding: 0.8rem 1.4rem;
+    background: var(--warm-100);
+    color: var(--warm-500);
+    border: 1px solid var(--warm-200);
+    text-decoration: none;
+    border-radius: 999px;
+    font-weight: 500;
+    font-size: 0.95rem;
+    transition: all 0.2s;
+    flex-shrink: 0;
+  }
+  .pachete-cta-call:hover {
+    background: var(--warm-200);
+    transform: translateY(-1px);
+  }
+
+  .pachete-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.5rem;
+  }
+
+  /* Carousel wrapper (only active on mobile) */
+  .pachete-carousel-wrap {
+    position: relative;
+  }
+  .pachete-carousel-controls {
+    display: none;
+  }
+  .pachete-progress {
+    display: none;
+  }
+  .pachet {
+    background: var(--paper);
+    border: 1px solid var(--line);
+    border-radius: 20px;
+    padding: 2rem 1.75rem;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s ease;
+    display: flex;
+    flex-direction: column;
+  }
+  .pachet:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 24px 48px -16px rgba(20, 40, 58, 0.14);
+    border-color: var(--bleu-200);
+  }
+  .pachet::before {
+    content: '';
+    position: absolute;
+    top: 0; right: 0;
+    width: 140px; height: 140px;
+    background: radial-gradient(circle, rgba(232, 206, 170, 0.25) 0%, transparent 70%);
+    border-radius: 50%;
+    transform: translate(40%, -40%);
+    transition: transform 0.4s ease;
+  }
+  .pachet:hover::before { transform: translate(30%, -30%) scale(1.2); }
+
+  .pachet.featured {
+    background: linear-gradient(135deg, var(--bleu-700) 0%, var(--bleu-900) 100%);
+    color: var(--paper);
+    border-color: transparent;
+  }
+  .pachet.featured::before {
+    background: radial-gradient(circle, rgba(224, 165, 120, 0.35) 0%, transparent 70%);
+  }
+
+  .pachet-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.35rem 0.85rem;
+    background: var(--warm-100);
+    color: var(--warm-500);
+    border-radius: 999px;
+    font-size: 0.7rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-bottom: 1.25rem;
+    align-self: flex-start;
+    position: relative;
+    z-index: 1;
+  }
+  .pachet.featured .pachet-badge {
+    background: var(--warm-300);
+    color: var(--bleu-900);
+  }
+
+  .pachet h3 {
+    font-family: var(--display);
+    font-size: 1.4rem;
+    font-weight: 500;
+    color: var(--bleu-900);
+    line-height: 1.25;
+    margin-bottom: 1rem;
+    letter-spacing: -0.01em;
+    position: relative;
+    z-index: 1;
+  }
+  .pachet.featured h3 { color: var(--paper); }
+
+  .pachet-list {
+    list-style: none;
+    margin-bottom: 1.5rem;
+    flex: 1;
+    position: relative;
+    z-index: 1;
+  }
+  .pachet-list li {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.6rem;
+    color: var(--ink-soft);
+    font-size: 0.92rem;
+    margin-bottom: 0.6rem;
+    line-height: 1.5;
+  }
+  .pachet.featured .pachet-list li { color: rgba(250, 251, 252, 0.85); }
+  .pachet-list li svg {
+    flex-shrink: 0;
+    color: var(--warm-400);
+    margin-top: 2px;
+  }
+  .pachet.featured .pachet-list li svg { color: var(--warm-200); }
+
+  .pachet-pricing {
+    margin-top: auto;
+    padding-top: 1.25rem;
+    border-top: 1px dashed var(--line);
+    position: relative;
+    z-index: 1;
+  }
+  .pachet.featured .pachet-pricing { border-top-color: rgba(255,255,255,0.15); }
+  .pachet-old-price {
+    font-size: 0.95rem;
+    color: var(--ink-soft);
+    text-decoration: line-through;
+    margin-right: 0.5rem;
+    opacity: 0.7;
+  }
+  .pachet.featured .pachet-old-price { color: rgba(250, 251, 252, 0.6); }
+  .pachet-price {
+    font-family: var(--display);
+    font-size: 2rem;
+    font-weight: 500;
+    color: var(--bleu-900);
+    line-height: 1;
+    display: inline-flex;
+    align-items: baseline;
+    gap: 0.3rem;
+  }
+  .pachet.featured .pachet-price { color: var(--warm-200); }
+  .pachet-price small {
+    font-size: 0.85rem;
+    font-weight: 400;
+    color: var(--ink-soft);
+    font-style: italic;
+  }
+  .pachet.featured .pachet-price small { color: rgba(250, 251, 252, 0.7); }
+  .pachet-call {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-top: 1rem;
+    color: var(--bleu-700);
+    text-decoration: none;
+    font-size: 0.95rem;
+    font-weight: 500;
+    transition: all 0.2s;
+  }
+  .pachet-call:hover { color: var(--warm-500); gap: 0.75rem; }
+  .pachet.featured .pachet-call { color: var(--warm-200); }
+  .pachet.featured .pachet-call:hover { color: var(--paper); }
+
+  .pachete-bonus {
+    margin-top: 2rem;
+    padding: 1.5rem 2rem;
+    background: linear-gradient(135deg, var(--warm-100) 0%, var(--warm-50) 100%);
+    border-radius: 16px;
+    border: 1px dashed var(--warm-300);
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+  .pachete-bonus-icon {
+    width: 48px; height: 48px;
+    background: var(--warm-300);
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--paper);
+    flex-shrink: 0;
+  }
+  .pachete-bonus-text { flex: 1; min-width: 200px; }
+  .pachete-bonus-text strong {
+    display: block;
+    color: var(--bleu-900);
+    font-family: var(--display);
+    font-size: 1.1rem;
+    font-weight: 500;
+    margin-bottom: 0.15rem;
+  }
+  .pachete-bonus-text span {
+    color: var(--ink-soft);
+    font-size: 0.9rem;
+  }
+
+  /* ---------- DESPRE ---------- */
+  .despre { background: linear-gradient(180deg, var(--paper) 0%, var(--bleu-50) 100%); }
+  .despre-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 5rem;
+    align-items: center;
+  }
+  .despre-text .eyebrow { margin-bottom: 1rem; }
+  .despre-text h2 {
+    font-family: var(--display);
+    font-size: clamp(2rem, 4vw, 2.75rem);
+    font-weight: 400;
+    line-height: 1.15;
+    letter-spacing: -0.02em;
+    color: var(--bleu-900);
+    margin-bottom: 1.5rem;
+  }
+  .despre-text h2 em { font-style: italic; color: var(--warm-400); }
+  .despre-text p {
+    color: var(--ink-soft);
+    margin-bottom: 1.25rem;
+    line-height: 1.75;
+  }
+  .despre-values {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+    margin-top: 2rem;
+  }
+  .value {
+    padding: 1.25rem 1.5rem;
+    background: var(--bleu-50);
+    border-left: 3px solid var(--warm-300);
+    border-radius: 0 12px 12px 0;
+  }
+  .value-num {
+    font-family: var(--display);
+    font-style: italic;
+    color: var(--warm-400);
+    font-size: 1.1rem;
+    margin-bottom: 0.25rem;
+  }
+  .value-label {
+    font-weight: 500;
+    color: var(--bleu-900);
+    font-size: 0.95rem;
+  }
+  .despre-visual {
+    position: relative;
+    aspect-ratio: 1;
+  }
+  .despre-img-frame {
+    position: absolute;
+    inset: 0;
+    border-radius: 50% 50% 50% 0;
+    background: linear-gradient(135deg, var(--bleu-200) 0%, var(--bleu-400) 100%);
+    overflow: hidden;
+  }
+  .despre-img-frame::after {
+    content: '';
+    position: absolute;
+    bottom: -20px; right: -20px;
+    width: 120px; height: 120px;
+    background: var(--warm-200);
+    border-radius: 50%;
+    z-index: -1;
+  }
+  .despre-img-frame svg {
+    width: 60%;
+    height: 60%;
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    opacity: 0.3;
+  }
+
+  /* ---------- SERVICII ---------- */
+  .servicii { background: var(--bleu-50); }
+  .servicii-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 1.5rem;
+  }
+  .serviciu {
+    background: var(--paper);
+    padding: 2.25rem 2rem;
+    border-radius: 20px;
+    border: 1px solid var(--line);
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+  }
+  .serviciu::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 3px;
+    background: linear-gradient(90deg, var(--bleu-400), var(--warm-300));
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.4s ease;
+  }
+  .serviciu:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 20px 40px -16px rgba(20, 40, 58, 0.12);
+    border-color: var(--bleu-200);
+  }
+  .serviciu:hover::before { transform: scaleX(1); }
+  .serviciu-icon {
+    width: 52px; height: 52px;
+    background: var(--bleu-100);
+    border-radius: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1.5rem;
+    color: var(--bleu-700);
+    transition: all 0.3s;
+  }
+  .serviciu:hover .serviciu-icon {
+    background: var(--warm-100);
+    color: var(--warm-500);
+  }
+  .serviciu h3 {
+    font-family: var(--display);
+    font-size: 1.4rem;
+    font-weight: 500;
+    color: var(--bleu-900);
+    margin-bottom: 0.75rem;
+    letter-spacing: -0.01em;
+  }
+  .serviciu p {
+    color: var(--ink-soft);
+    font-size: 0.95rem;
+    line-height: 1.65;
+  }
+
+  /* ---------- LOCATII ---------- */
+  .locatii { background: var(--bleu-50); }
+  .locatii-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+  }
+  .locatie-card {
+    background: var(--paper);
+    border-radius: 24px;
+    overflow: hidden;
+    border: 1px solid var(--line);
+    transition: all 0.35s ease;
+    display: flex;
+    flex-direction: column;
+  }
+  .locatie-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 30px 60px -20px rgba(20, 40, 58, 0.18);
+  }
+  .locatie-map {
+    height: 200px;
+    background: var(--bleu-50);
+    border-bottom: 1px solid var(--line);
+    position: relative;
+    overflow: hidden;
+  }
+  .locatie-map svg {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0.4;
+  }
+  .locatie-map .pin {
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -100%);
+    width: 40px;
+    height: 50px;
+    background: var(--warm-400);
+    border-radius: 50% 50% 50% 0;
+    transform: translate(-50%, -100%) rotate(-45deg);
+    box-shadow: 0 8px 20px rgba(168, 92, 58, 0.35);
+    animation: bounce 2s infinite ease-in-out;
+  }
+  .locatie-map .pin::after {
+    content: '';
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    width: 16px; height: 16px;
+    background: var(--paper);
+    border-radius: 50%;
+  }
+  @keyframes bounce {
+    0%, 100% { transform: translate(-50%, -100%) rotate(-45deg) translateY(0); }
+    50% { transform: translate(-50%, -100%) rotate(-45deg) translateY(-8px); }
+  }
+
+  .locatie-body { padding: 2rem; flex: 1; display: flex; flex-direction: column; }
+  .locatie-tag {
+    display: inline-block;
+    font-size: 0.75rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--warm-500);
+    margin-bottom: 0.75rem;
+  }
+  .locatie-card h3 {
+    font-family: var(--display);
+    font-size: 1.75rem;
+    font-weight: 500;
+    color: var(--bleu-900);
+    letter-spacing: -0.01em;
+    margin-bottom: 1rem;
+  }
+  .locatie-info {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.75rem;
+    color: var(--ink-soft);
+    font-size: 0.95rem;
+    margin-bottom: 0.75rem;
+    line-height: 1.5;
+  }
+  .locatie-info svg {
+    flex-shrink: 0;
+    color: var(--bleu-500);
+    margin-top: 2px;
+  }
+  .locatie-info a {
+    color: var(--ink-soft);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+  .locatie-info a:hover { color: var(--warm-500); }
+
+  .locatie-actions {
+    display: flex;
+    gap: 0.75rem;
+    margin-top: auto;
+    padding-top: 1.5rem;
+    flex-wrap: wrap;
+  }
+  .locatie-actions a {
+    flex: 1;
+    min-width: 140px;
+    padding: 0.75rem 1rem;
+    border-radius: 12px;
+    text-decoration: none;
+    font-size: 0.9rem;
+    font-weight: 500;
+    text-align: center;
+    transition: all 0.2s;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+  }
+  .btn-call {
+    background: var(--bleu-700);
+    color: var(--paper);
+  }
+  .btn-call:hover { background: var(--bleu-900); }
+  .btn-map {
+    background: var(--warm-100);
+    color: var(--warm-500);
+    border: 1px solid var(--warm-200);
+  }
+  .btn-map:hover { background: var(--warm-200); }
+
+  /* ---------- ANALIZE ---------- */
+  .analize { background: var(--paper); }
+  .analize-card {
+    max-width: 960px;
+    margin: 0 auto;
+    background: linear-gradient(135deg, var(--bleu-700) 0%, var(--bleu-900) 100%);
+    border-radius: 28px;
+    padding: 4rem;
+    color: var(--paper);
+    position: relative;
+    overflow: hidden;
+    display: grid;
+    grid-template-columns: 1.3fr 1fr;
+    gap: 3rem;
+    align-items: center;
+  }
+  .analize-card::before {
+    content: '';
+    position: absolute;
+    top: -50%; right: -20%;
+    width: 500px; height: 500px;
+    background: radial-gradient(circle, rgba(224, 165, 120, 0.25) 0%, transparent 60%);
+    border-radius: 50%;
+  }
+  .analize-card .eyebrow { color: var(--warm-200); }
+  .analize-card .eyebrow::before { background: var(--warm-300); }
+  .analize-card h2 {
+    font-family: var(--display);
+    font-size: clamp(1.75rem, 3.5vw, 2.5rem);
+    font-weight: 400;
+    line-height: 1.15;
+    letter-spacing: -0.02em;
+    margin-bottom: 1.25rem;
+    position: relative;
+  }
+  .analize-card h2 em { font-style: italic; color: var(--warm-200); }
+  .analize-card p {
+    color: rgba(250, 251, 252, 0.8);
+    margin-bottom: 2rem;
+    line-height: 1.7;
+    position: relative;
+  }
+  .analize-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 1rem 2rem;
+    background: var(--warm-300);
+    color: var(--bleu-900);
+    text-decoration: none;
+    border-radius: 999px;
+    font-weight: 500;
+    transition: all 0.25s ease;
+    position: relative;
+  }
+  .analize-btn:hover {
+    background: var(--warm-200);
+    transform: translateX(4px);
+  }
+  .analize-visual {
+    position: relative;
+    z-index: 1;
+  }
+  .analize-mock {
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 16px;
+    padding: 1.5rem;
+    backdrop-filter: blur(10px);
+  }
+  .analize-mock-header {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 1.25rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+  }
+  .analize-mock-dot {
+    width: 8px; height: 8px;
+    background: #4ade80;
+    border-radius: 50%;
+    box-shadow: 0 0 0 4px rgba(74, 222, 128, 0.2);
+  }
+  .analize-mock-text {
+    font-size: 0.85rem;
+    color: rgba(250, 251, 252, 0.7);
+  }
+  .analize-mock-row {
+    display: flex;
+    justify-content: space-between;
+    padding: 0.6rem 0;
+    font-size: 0.9rem;
+    color: rgba(250, 251, 252, 0.85);
+    border-bottom: 1px dashed rgba(255,255,255,0.08);
+  }
+  .analize-mock-row:last-child { border: none; }
+  .analize-mock-row span:last-child {
+    color: var(--warm-200);
+    font-family: var(--display);
+    font-style: italic;
+  }
+
+  /* ---------- CONTACT ---------- */
+  .contact { background: linear-gradient(180deg, var(--bleu-50) 0%, var(--paper) 100%); }
+  .contact-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    max-width: 1100px;
+    margin: 0 auto;
+    align-items: center;
+  }
+  .contact-info h2 {
+    font-family: var(--display);
+    font-size: clamp(2rem, 4vw, 2.75rem);
+    font-weight: 400;
+    line-height: 1.15;
+    letter-spacing: -0.02em;
+    color: var(--bleu-900);
+    margin-bottom: 1.25rem;
+  }
+  .contact-info h2 em { font-style: italic; color: var(--warm-400); }
+  .contact-info > p {
+    color: var(--ink-soft);
+    margin-bottom: 2rem;
+    line-height: 1.7;
+  }
+  .contact-item {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1.25rem 0;
+    border-bottom: 1px solid var(--line);
+  }
+  .contact-item:last-child { border-bottom: none; }
+  .contact-item-icon {
+    width: 44px; height: 44px;
+    background: var(--bleu-100);
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--bleu-700);
+    flex-shrink: 0;
+  }
+  .contact-item-label {
+    font-size: 0.8rem;
+    color: var(--ink-soft);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-bottom: 0.15rem;
+  }
+  .contact-item a, .contact-item-value {
+    color: var(--bleu-900);
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 1.05rem;
+    transition: color 0.2s;
+  }
+  .contact-item a:hover { color: var(--warm-500); }
+
+  .contact-card {
+    background: var(--paper);
+    padding: 3rem 2.5rem;
+    border-radius: 24px;
+    border: 1px solid var(--line);
+    box-shadow: 0 20px 50px -20px rgba(20, 40, 58, 0.1);
+    text-align: center;
+  }
+  .contact-card-icon {
+    width: 64px; height: 64px;
+    margin: 0 auto 1.25rem;
+    background: linear-gradient(135deg, var(--warm-200), var(--warm-300));
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--paper);
+  }
+  .contact-card h3 {
+    font-family: var(--display);
+    font-size: 1.5rem;
+    font-weight: 500;
+    color: var(--bleu-900);
+    margin-bottom: 0.5rem;
+  }
+  .contact-card p {
+    color: var(--ink-soft);
+    font-size: 0.95rem;
+    margin-bottom: 1.5rem;
+  }
+  .contact-numbers {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+  .contact-numbers a {
+    padding: 1rem 1.5rem;
+    border-radius: 12px;
+    background: var(--bleu-50);
+    color: var(--bleu-900);
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 1.1rem;
+    transition: all 0.25s;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .contact-numbers a:hover {
+    background: var(--bleu-700);
+    color: var(--paper);
+    transform: translateX(4px);
+  }
+  .contact-numbers a small {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    opacity: 0.7;
+    font-weight: 400;
+  }
+
+  /* ---------- FOOTER ---------- */
+  footer {
+    background: var(--bleu-900);
+    color: rgba(250, 251, 252, 0.7);
+    padding: 4rem 2rem 2rem;
+  }
+  .footer-inner {
+    max-width: 1280px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1.5fr 1fr 1fr 1fr;
+    gap: 3rem;
+    margin-bottom: 3rem;
+  }
+  footer .logo-footer { margin-bottom: 1rem; }
+  footer .logo-footer .brand { color: var(--paper); }
+  footer .logo-footer .sub { color: var(--warm-200); border-top-color: rgba(236, 206, 170, 0.3); }
+  footer p { font-size: 0.9rem; line-height: 1.7; max-width: 320px; }
+  footer h4 {
+    font-family: var(--display);
+    font-style: italic;
+    font-weight: 400;
+    color: var(--paper);
+    margin-bottom: 1rem;
+    font-size: 1.05rem;
+  }
+  footer ul { list-style: none; }
+  footer li { margin-bottom: 0.6rem; }
+  footer li a {
+    color: rgba(250, 251, 252, 0.6);
+    text-decoration: none;
+    font-size: 0.9rem;
+    transition: color 0.2s;
+  }
+  footer li a:hover { color: var(--warm-200); }
+  .footer-bottom {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding-top: 2rem;
+    border-top: 1px solid rgba(255,255,255,0.08);
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 1rem;
+    font-size: 0.85rem;
+  }
+
+  /* ---------- ANIMATIONS ---------- */
+  .reveal {
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 0.8s ease, transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .reveal.in {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* ---------- RESPONSIVE ---------- */
+  @media (max-width: 920px) {
+    .nav-links { display: none; }
+    .menu-toggle { display: block; }
+    .nav-cta { padding: 0.5rem 1rem; font-size: 0.85rem; }
+    .nav-cta-secondary { display: none; }
+    .hero { padding: 7rem 1.5rem 3rem; }
+    .hero-inner { grid-template-columns: 1fr; gap: 2.5rem; }
+    .hero-gallery {
+      grid-template-rows: 160px 160px;
+      max-width: 500px;
+      margin: 0 auto;
+    }
+    .pachete-head { flex-direction: column; align-items: flex-start; }
+
+    /* CAROUSEL MOD on mobile */
+    .pachete-carousel-wrap {
+      margin: 0 -1.5rem;
+    }
+    .pachete-grid {
+      display: flex;
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      -webkit-overflow-scrolling: touch;
+      gap: 1rem;
+      padding: 0.5rem 1.5rem 1.5rem;
+      scrollbar-width: none;
+      grid-template-columns: none;
+    }
+    .pachete-grid::-webkit-scrollbar { display: none; }
+    .pachete-grid .pachet {
+      flex: 0 0 75%;
+      max-width: 75%;
+      scroll-snap-align: center;
+      scroll-snap-stop: always;
+    }
+
+    .pachete-carousel-controls {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      padding: 0 1.5rem;
+      margin-top: 0.5rem;
+    }
+    .carousel-arrows {
+      display: flex;
+      gap: 0.5rem;
+    }
+    .carousel-arrow {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      border: 1px solid var(--bleu-200);
+      background: var(--paper);
+      color: var(--bleu-700);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.2s;
+      flex-shrink: 0;
+    }
+    .carousel-arrow:hover:not(:disabled) {
+      background: var(--bleu-700);
+      color: var(--paper);
+      border-color: var(--bleu-700);
+    }
+    .carousel-arrow:disabled {
+      opacity: 0.35;
+      cursor: not-allowed;
+    }
+    .carousel-arrow:active:not(:disabled) {
+      transform: scale(0.95);
+    }
+
+    .pachete-progress {
+      display: flex;
+      flex: 1;
+      gap: 0.4rem;
+      align-items: center;
+      max-width: 200px;
+    }
+    .progress-dot {
+      flex: 1;
+      height: 3px;
+      background: var(--bleu-200);
+      border-radius: 2px;
+      transition: all 0.35s ease;
+      cursor: pointer;
+      border: none;
+      padding: 0;
+    }
+    .progress-dot.active {
+      background: var(--warm-400);
+      flex: 2;
+    }
+
+    section { padding: 4rem 1.5rem; }
+    .despre-grid, .locatii-grid, .contact-grid { grid-template-columns: 1fr; gap: 3rem; }
+    .despre-visual { max-width: 380px; margin: 0 auto; }
+    .analize-card {
+      padding: 2.5rem 2rem;
+      grid-template-columns: 1fr;
+      gap: 2rem;
+    }
+    .footer-inner { grid-template-columns: 1fr 1fr; gap: 2rem; }
+    .footer-bottom { flex-direction: column; text-align: center; }
+  }
+  @media (max-width: 540px) {
+    .hero-gallery { grid-template-rows: 130px 130px; gap: 0.75rem; }
+    .hero-photo-badge { font-size: 0.7rem; padding: 0.4rem 0.7rem; }
+    .pachete-bonus { padding: 1.25rem 1.5rem; }
+    .pachete-grid .pachet {
+      flex: 0 0 78%;
+      max-width: 78%;
+    }
+    .despre-values { grid-template-columns: 1fr; }
+    .footer-inner { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="#" class="logo">
+      <span class="logo-text">
+        <span class="brand">SANUS</span>
+        <span class="sub">CLINIC</span>
+      </span>
+    </a>
+    <ul class="nav-links">
+      <li><a href="#despre">Despre noi</a></li>
+      <li><a href="#pachete">Pachete</a></li>
+      <li><a href="#servicii">Servicii</a></li>
+      <li><a href="#locatii">Locații</a></li>
+      <li><a href="#analize">Analize</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+    <div class="nav-actions">
+      <a href="https://cloud.easymedical.ro/esanus/loginPatient.asp" class="nav-cta nav-cta-secondary">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="9" y1="15" x2="15" y2="15"/></svg>
+        Verifică analize
+      </a>
+      <a href="#contact" class="nav-cta">
+        Sună acum
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+      </a>
+    </div>
+    <button class="menu-toggle" aria-label="Menu"><span></span><span></span><span></span></button>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-inner">
+    <div class="hero-text reveal">
+      <div class="eyebrow">Sănătatea ta, prioritatea noastră</div>
+      <h1>Îngrijire medicală <em>completă</em>, aproape de tine.</h1>
+      <p class="lead">La Sanus CLINIC oferim servicii de recuperare medicală, medicină internă, ecografie și analize de laborator în două locații: București (Crângași) și Mavrodin.</p>
+      <div class="hero-actions">
+        <a href="#locatii" class="btn-primary">
+          Vezi locațiile
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+        </a>
+        <a href="#analize" class="btn-secondary">Verifică analize</a>
+      </div>
+    </div>
+    <div class="hero-visual reveal">
+      <div class="hero-gallery">
+        <div class="hero-photo hero-photo-1">
+          <img src="https://images.unsplash.com/photo-1629909613654-28e377c37b09?w=600&q=80" alt="Interior clinică modernă" loading="lazy">
+          <div class="hero-photo-badge">Clinică modernă</div>
+        </div>
+        <div class="hero-photo hero-photo-2">
+          <img src="https://images.unsplash.com/photo-1559757148-5c350d0d3c56?w=400&q=80" alt="Consultație medicală" loading="lazy">
+        </div>
+        <div class="hero-photo hero-photo-3">
+          <img src="https://images.unsplash.com/photo-1579154204601-01588f351e67?w=400&q=80" alt="Echipament laborator" loading="lazy">
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PACHETE PROMOTIONALE -->
+<section id="pachete" class="pachete">
+  <div class="container">
+    <div class="pachete-head reveal">
+      <div class="head-text">
+        <div class="eyebrow">Pachete promoționale</div>
+        <h2>Oferte <em>active</em> pentru sănătatea ta.</h2>
+        <p>Pachete special concepute pentru a-ți oferi îngrijire completă la un preț avantajos.</p>
+      </div>
+      <a href="tel:+40765565984" class="pachete-cta-call">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+        0765 565 984
+      </a>
+    </div>
+
+    <div class="pachete-carousel-wrap">
+      <div class="pachete-grid" id="pacheteCarousel">
+      <!-- Pachet 1: Recuperare 10+1 -->
+      <div class="pachet reveal">
+        <span class="pachet-badge">Recuperare medicală</span>
+        <h3>10 ședințe + 1 GRATUITĂ</h3>
+        <ul class="pachet-list">
+          <li>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+            10 ședințe de recuperare medicală
+          </li>
+          <li>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+            1 ședință BONUS gratuită
+          </li>
+          <li>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+            Plan personalizat de recuperare
+          </li>
+        </ul>
+        <div class="pachet-pricing">
+          <div class="pachet-price">1050 LEI</div>
+          <a href="tel:+40765565984" class="pachet-call">
+            Sună pentru programare
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+          </a>
+        </div>
+      </div>
+
+      <!-- Pachet 2: FEATURED - Pachet special ecografie + analize -->
+      <div class="pachet featured reveal">
+        <span class="pachet-badge">★ Cel mai popular</span>
+        <h3>Pachet Special — Ecografie + Analize</h3>
+        <ul class="pachet-list">
+          <li>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+            Ecografie abdominală totală
+          </li>
+          <li>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+            Pachet analize uzuale
+          </li>
+          <li>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+            Interpretare și recomandări personalizate
+          </li>
+        </ul>
+        <div class="pachet-pricing">
+          <div class="pachet-price">450 LEI</div>
+          <a href="tel:+40765565984" class="pachet-call">
+            Sună pentru programare
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+          </a>
+        </div>
+      </div>
+
+      <!-- Pachet 3: Analize complete reduse -->
+      <div class="pachet reveal">
+        <span class="pachet-badge">Ofertă specială</span>
+        <h3>Pachet complet analize medicale</h3>
+        <ul class="pachet-list">
+          <li>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+            Set complet de analize medicale
+          </li>
+          <li>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+            Recoltare în clinică
+          </li>
+          <li>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+            Rezultate online disponibile
+          </li>
+        </ul>
+        <div class="pachet-pricing">
+          <span class="pachet-old-price">450 LEI</span>
+          <span class="pachet-price">380 LEI</span>
+          <a href="tel:+40765565984" class="pachet-call">
+            Sună pentru programare
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+          </a>
+        </div>
+      </div>
+
+      <!-- Pachet 4: Recuperare completa -->
+      <div class="pachet reveal">
+        <span class="pachet-badge">Recuperare completă</span>
+        <h3>Pachet complet de recuperare medicală</h3>
+        <ul class="pachet-list">
+          <li>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+            Program complet de recuperare
+          </li>
+          <li>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+            Evaluare inițială și plan personalizat
+          </li>
+          <li>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+            Monitorizare progres
+          </li>
+        </ul>
+        <div class="pachet-pricing">
+          <div class="pachet-price">899 LEI</div>
+          <a href="tel:+40765565984" class="pachet-call">
+            Sună pentru programare
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+          </a>
+        </div>
+      </div>
+      </div>
+
+      <!-- Carousel controls (mobile only) -->
+      <div class="pachete-carousel-controls">
+        <div class="pachete-progress" id="pacheteProgress">
+          <button class="progress-dot active" data-index="0" aria-label="Pachet 1"></button>
+          <button class="progress-dot" data-index="1" aria-label="Pachet 2"></button>
+          <button class="progress-dot" data-index="2" aria-label="Pachet 3"></button>
+          <button class="progress-dot" data-index="3" aria-label="Pachet 4"></button>
+        </div>
+        <div class="carousel-arrows">
+          <button class="carousel-arrow" id="pachetePrev" aria-label="Pachetul anterior" disabled>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>
+          </button>
+          <button class="carousel-arrow" id="pacheteNext" aria-label="Pachetul următor">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Bonus transport gratuit -->
+    <div class="pachete-bonus reveal">
+      <div class="pachete-bonus-icon">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="3" width="15" height="13"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>
+      </div>
+      <div class="pachete-bonus-text">
+        <strong>Transport GRATUIT inclus</strong>
+        <span>Pentru toate pachetele de recuperare medicală, oferim transport gratuit pe o rază de 20 km în jurul clinicii.</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- DESPRE -->
+<section id="despre" class="despre">
+  <div class="container">
+    <div class="despre-grid">
+      <div class="despre-text reveal">
+        <div class="eyebrow">Despre Sanus CLINIC</div>
+        <h2>O echipă dedicată sănătății tale, <em>la fiecare pas</em>.</h2>
+        <p>Sanus CLINIC este o clinică medicală de încredere, construită în jurul unui principiu simplu: pacientul în centrul atenției. De la prima consultație și până la rezultatele finale, te însoțim cu profesionalism, empatie și grijă pentru detalii.</p>
+        <p>Echipa noastră de medici cu experiență oferă servicii integrate de medicină internă, recuperare medicală, ecografie și analize de laborator — totul într-un mediu modern, sigur și prietenos.</p>
+        <div class="despre-values">
+          <div class="value">
+            <div class="value-num">01.</div>
+            <div class="value-label">Profesionalism</div>
+          </div>
+          <div class="value">
+            <div class="value-num">02.</div>
+            <div class="value-label">Empatie</div>
+          </div>
+          <div class="value">
+            <div class="value-num">03.</div>
+            <div class="value-label">Tehnologie modernă</div>
+          </div>
+          <div class="value">
+            <div class="value-num">04.</div>
+            <div class="value-label">Rezultate rapide</div>
+          </div>
+        </div>
+      </div>
+      <div class="despre-visual reveal">
+        <div class="despre-img-frame">
+          <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+            <path d="M100 30 C 70 30, 50 50, 50 80 L50 130 C 50 160, 70 180, 100 180 C 130 180, 150 160, 150 130 L150 80 C 150 50, 130 30, 100 30 Z" stroke="white" stroke-width="3" fill="none"/>
+            <circle cx="100" cy="100" r="20" fill="white"/>
+            <path d="M85 100 L95 110 L115 90" stroke="#3a6280" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICII -->
+<section id="servicii" class="servicii">
+  <div class="container">
+    <div class="section-head reveal">
+      <div class="eyebrow" style="justify-content: center; display: flex;">Ce oferim</div>
+      <h2>Servicii medicale <em>complete</em>, sub un singur acoperiș.</h2>
+      <p>Indiferent că ai nevoie de o consultație de rutină, o investigație imagistică sau un program de recuperare, găsești totul la Sanus CLINIC.</p>
+    </div>
+    <div class="servicii-grid">
+      <div class="serviciu reveal">
+        <div class="serviciu-icon">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.29 1.51 4.04 3 5.5l7 7Z"/></svg>
+        </div>
+        <h3>Recuperare medicală</h3>
+        <p>Programe personalizate de fizioterapie și kinetoterapie pentru recuperare după traumatisme, intervenții chirurgicale sau afecțiuni cronice.</p>
+      </div>
+      <div class="serviciu reveal">
+        <div class="serviciu-icon">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+        </div>
+        <h3>Medicină internă</h3>
+        <p>Consultații complete, evaluări clinice și diagnostic pentru o gamă largă de afecțiuni, oferite de medici cu experiență.</p>
+      </div>
+      <div class="serviciu reveal">
+        <div class="serviciu-icon">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+        </div>
+        <h3>Ecografie</h3>
+        <p>Investigații imagistice precise — ecografie abdominală, tiroidiană, mamară și de părți moi — cu echipamente moderne.</p>
+      </div>
+      <div class="serviciu reveal">
+        <div class="serviciu-icon">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 2v6l-3 5a3 3 0 0 0 3 4h6a3 3 0 0 0 3-4l-3-5V2"/><path d="M8 2h8"/><path d="M7 16h10"/></svg>
+        </div>
+        <h3>Analize de laborator</h3>
+        <p>Recoltare și interpretare pentru o gamă completă de analize: hematologie, biochimie, hormoni, imunologie și multe altele.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- LOCATII -->
+<section id="locatii" class="locatii">
+  <div class="container">
+    <div class="section-head reveal">
+      <div class="eyebrow" style="justify-content: center; display: flex;">Unde ne găsești</div>
+      <h2>Două locații, aceeași <em>grijă</em> pentru tine.</h2>
+      <p>Apasă pe „Deschide în Maps" pentru a-ți deschide direct ruta către clinica noastră.</p>
+    </div>
+    <div class="locatii-grid">
+      <!-- Locatia Crangasi -->
+      <div class="locatie-card reveal">
+        <div class="locatie-map">
+          <svg viewBox="0 0 400 200" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <pattern id="grid-fine-1" width="20" height="20" patternUnits="userSpaceOnUse">
+                <path d="M 20 0 L 0 0 0 20" fill="none" stroke="#a8c4d8" stroke-width="0.5" opacity="0.4"/>
+              </pattern>
+              <pattern id="grid-bold-1" width="80" height="80" patternUnits="userSpaceOnUse">
+                <path d="M 80 0 L 0 0 0 80" fill="none" stroke="#7ba3bf" stroke-width="0.8" opacity="0.5"/>
+              </pattern>
+            </defs>
+            <rect width="400" height="200" fill="url(#grid-fine-1)"/>
+            <rect width="400" height="200" fill="url(#grid-bold-1)"/>
+          </svg>
+          <div class="pin"></div>
+        </div>
+        <div class="locatie-body">
+          <span class="locatie-tag">București</span>
+          <h3>Sanus CLINIC Crângași</h3>
+          <div class="locatie-info">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>
+            <span>Srg. Ștefan Crișan nr.1, Bucuresti</span>
+          </div>
+          <div class="locatie-info">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+            <a href="tel:+40773901707">0773 901 707</a>
+          </div>
+          <div class="locatie-info">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+            <span>Luni – Vineri: 08:00 – 20:00 · Sâmbătă: 09:00 – 14:00</span>
+          </div>
+          <div class="locatie-actions">
+            <a href="tel:+40773901707" class="btn-call">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+              Sună acum
+            </a>
+            <a href="https://www.google.com/maps/search/?api=1&query=Crangasi+Bucuresti" target="_blank" rel="noopener" class="btn-map">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>
+              Deschide în Maps
+            </a>
+          </div>
+        </div>
+      </div>
+      <!-- Locatia Mavrodin -->
+      <div class="locatie-card reveal">
+        <div class="locatie-map">
+          <svg viewBox="0 0 400 200" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <pattern id="grid-fine-2" width="20" height="20" patternUnits="userSpaceOnUse">
+                <path d="M 20 0 L 0 0 0 20" fill="none" stroke="#a8c4d8" stroke-width="0.5" opacity="0.4"/>
+              </pattern>
+              <pattern id="grid-bold-2" width="80" height="80" patternUnits="userSpaceOnUse">
+                <path d="M 80 0 L 0 0 0 80" fill="none" stroke="#7ba3bf" stroke-width="0.8" opacity="0.5"/>
+              </pattern>
+            </defs>
+            <rect width="400" height="200" fill="url(#grid-fine-2)"/>
+            <rect width="400" height="200" fill="url(#grid-bold-2)"/>
+          </svg>
+          <div class="pin"></div>
+        </div>
+        <div class="locatie-body">
+          <span class="locatie-tag">Dâmbovița</span>
+          <h3>Sanus CLINIC Mavrodin</h3>
+          <div class="locatie-info">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>
+            <span>I.L. Caragiale nr. 317 Mavrodin</span>
+          </div>
+          <div class="locatie-info">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+            <a href="tel:+40765565984">0765 565 984</a>
+          </div>
+          <div class="locatie-info">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+            <span>Luni – Vineri: 08:00 – 18:00 · Sâmbătă: 09:00 – 13:00</span>
+          </div>
+          <div class="locatie-actions">
+            <a href="tel:+40765565984" class="btn-call">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+              Sună acum
+            </a>
+            <a href="https://www.google.com/maps/search/?api=1&query=Mavrodin+Teleorman" target="_blank" rel="noopener" class="btn-map">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>
+              Deschide în Maps
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ANALIZE -->
+<section id="analize" class="analize">
+  <div class="container">
+    <div class="analize-card reveal">
+      <div>
+        <div class="eyebrow">Rezultate analize</div>
+        <h2>Verifică-ți rezultatele <em>online</em>, oricând, oriunde.</h2>
+        <p>Ai făcut analizele la Sanus CLINIC? Accesează platforma partenerului nostru de laborator pentru a vedea rezultatele în siguranță, direct de pe telefon sau laptop.</p>
+        <a href="https://cloud.easymedical.ro/esanus/loginPatient.asp" target="_blank" rel="noopener" class="analize-btn">
+          Verifică analize
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+        </a>
+      </div>
+      <div class="analize-visual">
+        <div class="analize-mock">
+          <div class="analize-mock-header">
+            <span class="analize-mock-dot"></span>
+            <span class="analize-mock-text">Rezultate disponibile</span>
+          </div>
+          <div class="analize-mock-row"><span>Hemoleucogramă</span><span>Normal</span></div>
+          <div class="analize-mock-row"><span>Glicemie</span><span>92 mg/dL</span></div>
+          <div class="analize-mock-row"><span>Colesterol total</span><span>185 mg/dL</span></div>
+          <div class="analize-mock-row"><span>TSH</span><span>2.1 mUI/L</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact" class="contact">
+  <div class="container">
+    <div class="contact-grid">
+      <div class="contact-info reveal">
+        <div class="eyebrow">Hai să vorbim</div>
+        <h2>Ai o întrebare? <em>Suntem aici.</em></h2>
+        <p>Pentru programări, informații despre servicii sau interpretarea analizelor, contactează-ne la oricare dintre cele două locații. Răspundem prompt și cu drag.</p>
+        <div class="contact-item">
+          <div class="contact-item-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+          </div>
+          <div>
+            <div class="contact-item-label">Email</div>
+            <a href="mailto:contact@sanusclinic.ro">contact@sanusclinic.ro</a>
+          </div>
+        </div>
+        <div class="contact-item">
+          <div class="contact-item-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          </div>
+          <div>
+            <div class="contact-item-label">Program general</div>
+            <span class="contact-item-value">Luni – Sâmbătă</span>
+          </div>
+        </div>
+      </div>
+      <div class="contact-card reveal">
+        <div class="contact-card-icon">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+        </div>
+        <h3>Sună acum</h3>
+        <p>Echipa noastră îți răspunde la întrebări și îți oferă informații despre servicii.</p>
+        <div class="contact-numbers">
+          <a href="tel:+40773901707">
+            <span>0773 901 707</span>
+            <small>Crângași</small>
+          </a>
+          <a href="tel:+40765565984">
+            <span>0765 565 984</span>
+            <small>Mavrodin</small>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div>
+      <a href="#" class="logo logo-footer">
+        <span class="logo-text">
+          <span class="brand">SANUS</span>
+          <span class="sub">CLINIC</span>
+        </span>
+      </a>
+      <p>Servicii medicale complete: recuperare, medicină internă, ecografie și analize de laborator în București (Crângași) și Mavrodin.</p>
+    </div>
+    <div>
+      <h4>Navighează</h4>
+      <ul>
+        <li><a href="#despre">Despre noi</a></li>
+        <li><a href="#servicii">Servicii</a></li>
+        <li><a href="#locatii">Locații</a></li>
+        <li><a href="#analize">Analize</a></li>
+      </ul>
+    </div>
+    <div>
+      <h4>Locații</h4>
+      <ul>
+        <li><a href="https://www.google.com/maps/search/?api=1&query=Crangasi+Bucuresti" target="_blank" rel="noopener">București — Crângași</a></li>
+        <li><a href="https://www.google.com/maps/search/?api=1&query=Mavrodin+Teleorman" target="_blank" rel="noopener">Mavrodin — Dâmbovița</a></li>
+      </ul>
+    </div>
+    <div>
+      <h4>Contact</h4>
+      <ul>
+        <li><a href="tel:+40773901707">0773 901707</a></li>
+        <li><a href="tel:+40765565984">0765 565 984</a></li>
+        <li><a href="mailto:contact@sanusclinic.ro">contact@sanusclinic.ro</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2026 Sanus CLINIC. Toate drepturile rezervate.</span>
+    <span>Făcut cu grijă pentru pacienții noștri.</span>
+  </div>
+</footer>
+
+<script>
+  // Scroll reveal
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry, i) => {
+      if (entry.isIntersecting) {
+        setTimeout(() => entry.target.classList.add('in'), i * 80);
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.12, rootMargin: '0px 0px -60px 0px' });
+
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+  // Nav shrink on scroll
+  const nav = document.querySelector('.nav');
+  window.addEventListener('scroll', () => {
+    if (window.scrollY > 20) {
+      nav.style.padding = '0.85rem 2rem';
+      nav.style.boxShadow = '0 4px 20px rgba(20, 40, 58, 0.06)';
+    } else {
+      nav.style.padding = '1.25rem 2rem';
+      nav.style.boxShadow = 'none';
+    }
+  });
+</script>
+
+</body>
+</html>

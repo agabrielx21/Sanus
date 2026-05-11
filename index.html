@@ -719,18 +719,29 @@
   /* ---------- SERVICII ---------- */
   .servicii { background: var(--bleu-50); }
   .servicii-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-    gap: 1.5rem;
+    display: flex;
+    gap: 1.25rem;
+    width: max-content; /* se extinde cât au nevoie toate cardurile */
+    will-change: transform;
+  }
+  .servicii-carousel-track {
+    overflow: hidden; /* ascunde cardurile din afara viewport-ului */
+    width: 100%;
   }
   .serviciu {
     background: var(--paper);
-    padding: 2.25rem 2rem;
+    padding: 2rem 1.75rem 1.75rem;
     border-radius: 20px;
     border: 1px solid var(--line);
     transition: all 0.3s ease;
     position: relative;
     overflow: hidden;
+    /* Înălțime egală + buton pinned jos */
+    display: flex;
+    flex-direction: column;
+    flex: 0 0 var(--card-w, 30%);
+    width: var(--card-w, 30%);
+    min-width: 0;
   }
   .serviciu::before {
     content: '';
@@ -749,15 +760,16 @@
   }
   .serviciu:hover::before { transform: scaleX(1); }
   .serviciu-icon {
-    width: 52px; height: 52px;
+    width: 48px; height: 48px;
     background: var(--bleu-100);
-    border-radius: 14px;
+    border-radius: 12px;
     display: flex;
     align-items: center;
     justify-content: center;
-    margin-bottom: 1.5rem;
+    margin-bottom: 1.25rem;
     color: var(--bleu-700);
     transition: all 0.3s;
+    flex-shrink: 0;
   }
   .serviciu:hover .serviciu-icon {
     background: var(--warm-100);
@@ -765,44 +777,86 @@
   }
   .serviciu h3 {
     font-family: var(--display);
-    font-size: 1.4rem;
+    font-size: 1.15rem;
     font-weight: 500;
     color: var(--bleu-900);
-    margin-bottom: 0.75rem;
+    margin-bottom: 0.6rem;
     letter-spacing: -0.01em;
+    line-height: 1.25;
   }
   .serviciu p {
     color: var(--ink-soft);
-    font-size: 0.95rem;
-    line-height: 1.65;
+    font-size: 0.88rem;
+    line-height: 1.6;
+    flex: 1; /* împinge butonul la baza cardului */
   }
 
-  /* Stiluri de bază Desktop */
-.servicii-carousel-wrap { position: relative; }
-.servicii-carousel-controls, .servicii-progress { display: none; }
+  /* Stiluri desktop carousel */
+  .servicii-carousel-wrap { position: relative; }
+  .servicii-carousel-track {
+    overflow: hidden;
+  }
+  .servicii-carousel-controls { display: none; }
+  .servicii-desktop-controls {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 0.5rem;
+    margin-bottom: 1.25rem;
+  }
+  .servicii-desktop-controls .carousel-arrow {
+    width: 38px; height: 38px;
+    border-radius: 50%;
+    border: 1px solid var(--bleu-200);
+    background: var(--paper);
+    color: var(--bleu-700);
+    cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    transition: all 0.2s;
+  }
+  .servicii-desktop-controls .carousel-arrow:hover:not(:disabled) {
+    background: var(--bleu-700); color: var(--paper); border-color: var(--bleu-700);
+  }
+  .servicii-desktop-controls .carousel-arrow:disabled { opacity: 0.3; cursor: not-allowed; }
+  .servicii-desktop-dots {
+    display: flex;
+    gap: 0.4rem;
+    align-items: center;
+    margin-right: auto;
+  }
+  .servicii-desktop-dots .progress-dot {
+    flex: unset;
+    width: 24px; height: 3px;
+    background: var(--bleu-200);
+    border-radius: 2px;
+    transition: all 0.35s ease;
+    cursor: pointer;
+    border: none; padding: 0;
+  }
+  .servicii-desktop-dots .progress-dot.active {
+    width: 40px;
+    background: var(--warm-400);
+  }
 
 /* Comportament Mobil */
 @media (max-width: 920px) {
+  .servicii-desktop-controls { display: none; }
   .servicii-carousel-wrap { margin: 0 -1.5rem; }
-  
   .servicii-grid {
-    display: flex;
     overflow-x: auto;
     scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
     gap: 1rem;
     padding: 0.5rem 1.5rem 1.5rem;
-    scrollbar-width: none; /* Hide scrollbar Firefox */
-    grid-template-columns: none;
+    scrollbar-width: none;
   }
-  
-  .servicii-grid::-webkit-scrollbar { display: none; } /* Hide scrollbar Chrome/Safari */
-  
+  .servicii-grid::-webkit-scrollbar { display: none; }
   .serviciu {
-    flex: 0 0 85%; /* Lățimea cardului pe mobil */
-    max-width: 85%;
+    flex: 0 0 80%;
+    max-width: 80%;
     scroll-snap-align: center;
+    scroll-snap-stop: always;
   }
-  
   .servicii-carousel-controls {
     display: flex;
     align-items: center;
@@ -810,14 +864,11 @@
     gap: 1rem;
     padding: 0 1.5rem;
   }
-  
   .servicii-progress {
     display: flex;
     flex: 1;
     gap: 0.4rem;
   }
-  
-  /* Folosește aceleași clase de dot și arrow ca la Pachete pentru consistență */
 }
 
   /* ---------- LOCATII ---------- */
@@ -1524,6 +1575,141 @@
   #splash-selector { padding: 1.25rem; gap: 1.25rem; }
   .clinic-opt { padding: 1.5rem 1.25rem 2rem; }
 }
+/* Buton "Află mai mult" pe cardurile de servicii */
+.serviciu {
+  cursor: pointer;
+}
+.serviciu-more {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  margin-top: 1.25rem;
+  padding: 0.55rem 1rem;
+  font-size: 0.82rem;
+  font-weight: 500;
+  color: var(--bleu-700);
+  background: var(--bleu-50);
+  border: 1px solid var(--bleu-200);
+  border-radius: 999px;
+  transition: all 0.2s;
+  align-self: flex-start; /* nu se întinde pe toată lățimea */
+}
+.serviciu:hover .serviciu-more {
+  background: var(--warm-100);
+  border-color: var(--warm-300);
+  color: var(--warm-500);
+  gap: 0.7rem;
+}
+
+/* ============================================================
+   MODAL SERVICIU
+   ============================================================ */
+.serviciu-modal-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 8888;
+  background: rgba(20, 40, 58, 0.55);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+}
+.serviciu-modal-overlay.open {
+  opacity: 1;
+  pointer-events: all;
+}
+.serviciu-modal-box {
+  background: var(--paper);
+  border-radius: 24px;
+  padding: 2.5rem 2.5rem 2rem;
+  max-width: 620px;
+  width: 100%;
+  max-height: 85vh;
+  overflow-y: auto;
+  position: relative;
+  transform: translateY(20px) scale(0.98);
+  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 0 32px 64px -16px rgba(20, 40, 58, 0.25);
+  scrollbar-width: thin;
+  scrollbar-color: var(--bleu-200) transparent;
+}
+.serviciu-modal-overlay.open .serviciu-modal-box {
+  transform: translateY(0) scale(1);
+}
+.serviciu-modal-close {
+  position: absolute;
+  top: 1.25rem; right: 1.25rem;
+  width: 36px; height: 36px;
+  border-radius: 50%;
+  border: 1px solid var(--line);
+  background: var(--paper);
+  color: var(--ink-soft);
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s;
+  flex-shrink: 0;
+}
+.serviciu-modal-close:hover { background: var(--bleu-50); color: var(--bleu-900); border-color: var(--bleu-300); }
+.serviciu-modal-icon {
+  width: 52px; height: 52px;
+  background: var(--bleu-100);
+  border-radius: 14px;
+  display: flex; align-items: center; justify-content: center;
+  color: var(--bleu-700);
+  margin-bottom: 1.25rem;
+}
+.serviciu-modal-title {
+  font-family: 'Fraunces', Georgia, serif;
+  font-size: 1.75rem;
+  font-weight: 500;
+  color: var(--bleu-900);
+  letter-spacing: -0.02em;
+  line-height: 1.15;
+  margin-bottom: 1.25rem;
+}
+.serviciu-modal-body {
+  color: var(--ink-soft);
+  font-size: 0.97rem;
+  line-height: 1.8;
+}
+.serviciu-modal-body p { margin-bottom: 1rem; }
+.serviciu-modal-body p:last-child { margin-bottom: 0; }
+.serviciu-modal-body strong { color: var(--bleu-900); font-weight: 600; }
+.serviciu-modal-body h4 {
+  font-family: 'Fraunces', Georgia, serif;
+  font-size: 1.1rem;
+  font-weight: 500;
+  color: var(--bleu-900);
+  margin: 1.5rem 0 0.5rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--line);
+}
+.serviciu-modal-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  margin-top: 1.75rem;
+  padding: 0.9rem 1.75rem;
+  background: var(--bleu-700);
+  color: var(--paper);
+  text-decoration: none;
+  border-radius: 999px;
+  font-weight: 500;
+  font-size: 0.95rem;
+  transition: all 0.2s;
+}
+.serviciu-modal-cta:hover { background: var(--bleu-900); transform: translateY(-1px); }
+
+@media (max-width: 540px) {
+  .serviciu-modal-box { padding: 2rem 1.5rem 1.5rem; border-radius: 20px; }
+  .serviciu-modal-title { font-size: 1.4rem; }
+}
 </style>
 </head>
 <body>
@@ -1669,11 +1855,16 @@
     <!-- Bonus transport gratuit -->
     <div class="pachete-bonus reveal">
       <div class="pachete-bonus-icon">
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="3" width="15" height="13"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
+        <polyline points="9 22 9 12 15 12 15 22"/>
+        <line x1="12" y1="15" x2="12" y2="15.01"/>
+        <path d="M12 18h.01"/>
+      </svg>
       </div>
       <div class="pachete-bonus-text">
-        <strong>Transport GRATUIT inclus</strong>
-        <span>Pentru toate pachetele de recuperare medicală, oferim transport gratuit pe o rază de 20 km în jurul clinicii.</span>
+        <strong>Decontare prin CAS disponibilă</strong>
+        <span>Acceptăm bilete de trimitere pentru servicii de recuperare medicală. Pacienții asigurați beneficiază de decontare integrală sau parțială în limita plafonului lunar.</span>
       </div>
     </div>
   </div>
@@ -1729,50 +1920,30 @@
       <p>Indiferent că ai nevoie de o consultație de rutină, o investigație imagistică sau un program de recuperare, găsești totul la Sanus CLINIC.</p>
     </div>
 
-    <!-- Wrapper adăugat pentru carusel -->
+    <!-- Wrapper pentru carusel -->
     <div class="servicii-carousel-wrap">
-      <div class="servicii-grid" id="serviciiCarousel">
-        <div class="serviciu reveal">
-          <div class="serviciu-icon">
-            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.29 1.51 4.04 3 5.5l7 7Z"/></svg>
-          </div>
-          <h3>Recuperare medicală</h3>
-          <p>Programe personalizate de fizioterapie și kinetoterapie pentru recuperare după traumatisme sau afecțiuni cronice.</p>
-        </div>
 
-        <div class="serviciu reveal">
-          <div class="serviciu-icon">
-            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
-          </div>
-          <h3>Medicină internă</h3>
-          <p>Consultații complete, evaluări clinice și diagnostic pentru o gamă largă de afecțiuni, oferite de medici cu experiență.</p>
-        </div>
+      <!-- Controale desktop (săgeți + dots) -->
+      <div class="servicii-desktop-controls">
+        <div class="servicii-desktop-dots" id="serviciiDesktopDots"></div>
+        <button class="carousel-arrow" id="serviciiPrevDesktop" aria-label="Anterior" disabled>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>
+        </button>
+        <button class="carousel-arrow" id="serviciiNextDesktop" aria-label="Următor">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg>
+        </button>
+      </div>
 
-        <div class="serviciu reveal">
-          <div class="serviciu-icon">
-            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
-          </div>
-          <h3>Ecografie</h3>
-          <p>Investigații imagistice precise — abdominală, tiroidiană, mamară și de părți moi — cu echipamente moderne.</p>
-        </div>
-
-        <div class="serviciu reveal">
-          <div class="serviciu-icon">
-            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 2v6l-3 5a3 3 0 0 0 3 4h6a3 3 0 0 0 3-4l-3-5V2"/><path d="M8 2h8"/><path d="M7 16h10"/></svg>
-          </div>
-          <h3>Analize de laborator</h3>
-          <p>Recoltare și interpretare pentru o gamă completă de analize: hematologie, biochimie, hormoni și imunologie.</p>
+      <!-- Track desktop (overflow hidden, animat cu JS) -->
+      <div class="servicii-carousel-track">
+        <div class="servicii-grid" id="serviciiCarousel">
+          <!-- Cardurile sunt injectate dinamic de JS după selectarea clinicii -->
         </div>
       </div>
 
-      <!-- Controale carusel (vizibile doar pe mobil prin CSS) -->
+      <!-- Controale mobil (scroll snap nativ) -->
       <div class="servicii-carousel-controls">
-        <div class="servicii-progress" id="serviciiProgress">
-          <button class="progress-dot active" data-index="0" aria-label="Serviciu 1"></button>
-          <button class="progress-dot" data-index="1" aria-label="Serviciu 2"></button>
-          <button class="progress-dot" data-index="2" aria-label="Serviciu 3"></button>
-          <button class="progress-dot" data-index="3" aria-label="Serviciu 4"></button>
-        </div>
+        <div class="servicii-progress" id="serviciiProgress"></div>
         <div class="carousel-arrows">
           <button class="carousel-arrow" id="serviciiPrev" aria-label="Anterior" disabled>
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>
@@ -1785,6 +1956,23 @@
     </div>
   </div>
 </section>
+
+<!-- MODAL SERVICIU -->
+<div id="serviciu-modal" class="serviciu-modal-overlay" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+  <div class="serviciu-modal-box">
+    <button class="serviciu-modal-close" id="modalClose" aria-label="Închide">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M18 6 6 18M6 6l12 12"/></svg>
+    </button>
+    <div class="serviciu-modal-icon" id="modalIcon"></div>
+    <h2 class="serviciu-modal-title" id="modal-title"></h2>
+    <div class="serviciu-modal-body" id="modalBody"></div>
+    <a id="modalCta" href="#contact" class="serviciu-modal-cta" onclick="closeModal()">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+      Sună pentru programare
+    </a>
+  </div>
+</div>
+
 
 <!-- LOCATII -->
 <section id="locatii" class="locatii">
@@ -1906,7 +2094,7 @@
           </div>
           <div>
             <div class="contact-item-label">Email</div>
-            <a href="mailto:contact@sanusclinic.ro">contact@sanusclinic.ro</a>
+            <a href="mailto:sanusclinic22@gmail.com">sanusclinic22@gmail.com</a>
           </div>
         </div>
         <div class="contact-item">
@@ -1973,7 +2161,7 @@
       <ul>
         <li><a href="tel:+40773901707">0773 901707</a></li>
         <li><a href="tel:+40765565984">0765 565 984</a></li>
-        <li><a href="mailto:contact@sanusclinic.ro">contact@sanusclinic.ro</a></li>
+        <li><a href="mailto:sanusclinic22@gmail.com">sanusclinic22@gmail.com</a></li>
       </ul>
     </div>
   </div>
@@ -1985,8 +2173,93 @@
 
 <script>
 // ============================================================
-// CLINIC DATA
+// SERVICII DATA
 // ============================================================
+const SERVICII = {
+  recuperare: {
+    icon: `<svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.29 1.51 4.04 3 5.5l7 7Z"/></svg>`,
+    title: 'Recuperare medicală',
+    preview: 'Programe personalizate de fizioterapie și kinetoterapie pentru recuperare după traumatisme, intervenții chirurgicale sau afecțiuni cronice.',
+    modal: `<p>La Sanus Clinic, recuperarea medicală înseamnă mai mult decât tratament — înseamnă revenirea la o viață fără durere, cu mai multă mobilitate și încredere în propriul corp.</p>
+    <p>Indiferent dacă te confrunți cu dureri de spate, probleme articulare, recuperare după accidentări, intervenții chirurgicale sau afecțiuni neurologice și ortopedice, echipa noastră îți oferă programe personalizate de recuperare, adaptate nevoilor tale reale.</p>
+    <p>Prin kinetoterapie, fizioterapie și terapii complementare, lucrăm împreună pentru a reduce durerea, a reda mobilitatea și a îmbunătăți calitatea vieții tale.</p>
+    <p>La Sanus Clinic, nu tratăm doar simptomele — tratăm cauza.<br><strong>Recuperează-te corect. Mișcă-te fără teamă. Trăiește fără limite.</strong></p>`
+  },
+  medicina_interna: {
+    icon: `<svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>`,
+    title: 'Medicină internă',
+    preview: 'Consultații complete, evaluări clinice și diagnostic pentru o gamă largă de afecțiuni, oferite de medici cu experiență.',
+    modal: `<p>În cadrul Sanus Clinic, serviciile de medicină internă sunt dedicate evaluării complete a stării tale de sănătate, prevenției și diagnosticării corecte a afecțiunilor.</p>
+    <p>Prin consultații atente și o abordare orientată către cauză, nu doar către simptome, medicul internist analizează întregul organism și identifică eventualele dezechilibre sau probleme de sănătate înainte ca acestea să evolueze.</p>
+    <p>Fie că te confrunți cu stări de oboseală, tensiune arterială oscilantă, amețeli, dureri, probleme digestive, metabolice sau ai nevoie de un control de rutină, la Sanus Clinic primești evaluare medicală completă și recomandări personalizate.</p>
+    <p><strong>Sănătatea începe cu un diagnostic corect. Iar grija pentru tine începe la timp.</strong></p>`
+  },
+  ecografie: {
+    icon: `<svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>`,
+    title: 'Ecografie',
+    preview: 'Investigații imagistice precise — abdominală, tiroidiană, mamară și de părți moi — cu echipamente moderne.',
+    modal: `<h4>Ecografie abdominală</h4>
+    <p>La Sanus Clinic, ecografia abdominală oferă o evaluare rapidă, sigură și neinvazivă a organelor interne, contribuind la depistarea din timp a diferitelor afecțiuni. Prin această investigație pot fi evaluate ficatul, vezica biliară, rinichii, pancreasul, splina și alte structuri abdominale.</p>
+    <p>Fie că prezinți dureri abdominale, balonare, disconfort digestiv sau dorești un control de rutină, investigația ecografică poate oferi răspunsuri clare, fără durere și fără expunere la radiații.</p>
+    <h4>Ecografie tiroidiană</h4>
+    <p>Ecografia tiroidiană este o investigație esențială pentru evaluarea glandei tiroide și identificarea eventualelor modificări structurale, precum noduli, inflamații sau mărirea glandei. La Sanus Clinic, această investigație este realizată cu atenție și precizie.</p>
+    <p>Dacă te confrunți cu oboseală inexplicabilă, fluctuații de greutate, palpitații, sensibilitate în zona gâtului sau ai antecedente tiroidiene, un control la timp poate face diferența.</p>
+    <p><strong>Investigații precise. Diagnostic corect. Grijă reală pentru sănătatea ta.</strong></p>`
+  },
+  analize: {
+    icon: `<svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 2v6l-3 5a3 3 0 0 0 3 4h6a3 3 0 0 0 3-4l-3-5V2"/><path d="M8 2h8"/><path d="M7 16h10"/></svg>`,
+    title: 'Analize de laborator',
+    preview: 'Recoltare și interpretare pentru o gamă completă de analize: hematologie, biochimie, hormoni și imunologie.',
+    modal: `<p>La Sanus Clinic, analizele de laborator reprezintă primul pas către un diagnostic corect și o monitorizare eficientă a stării tale de sănătate. Cu ajutorul laboratorului propriu, oferim rezultate precise, procesare rapidă și siguranța unor investigații realizate la standarde înalte.</p>
+    <p>De la analize uzuale și teste hormonale, până la investigații biochimice, hematologice, imunologice sau markeri specifici, fiecare analiză contribuie la o imagine clară asupra sănătății tale.</p>
+    <p>Fie că ai nevoie de analize de rutină, monitorizarea unei afecțiuni sau recomandarea unui medic, la Sanus Clinic beneficiezi de profesionalism, promptitudine și atenție la fiecare detaliu.</p>
+    <p><strong>Prevenția începe cu analizele potrivite. Iar sănătatea începe cu informația corectă.</strong></p>`
+  },
+  ortopedie: {
+    icon: `<svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8h1a4 4 0 0 1 0 8h-1"/><path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"/><line x1="6" y1="1" x2="6" y2="4"/><line x1="10" y1="1" x2="10" y2="4"/><line x1="14" y1="1" x2="14" y2="4"/></svg>`,
+    title: 'Ortopedie',
+    preview: 'Diagnosticarea, tratamentul și monitorizarea afecțiunilor sistemului musculo-scheletal — oase, articulații, ligamente și tendoane.',
+    modal: `<p>În cadrul Sanus Clinic, consultațiile de ortopedie sunt dedicate diagnosticării, tratamentului și monitorizării afecțiunilor sistemului musculo-scheletal — oase, articulații, ligamente, tendoane și musculatură.</p>
+    <p>Fie că te confrunți cu dureri articulare, traumatisme, entorse, limitarea mișcării, dureri de genunchi, umăr, șold sau coloană, evaluarea ortopedică te poate ajuta să identifici cauza reală a problemei și să începi tratamentul potrivit la timp.</p>
+    <p>Printr-o abordare atentă și personalizată, la Sanus Clinic punem accent pe diagnostic precis, recuperare corectă și redobândirea mobilității, astfel încât să te poți întoarce la activitățile tale fără durere și fără limitări.</p>
+    <p><strong>Mișcarea fără durere începe cu un diagnostic corect.</strong></p>`
+  },
+  logopedie: {
+    icon: `<svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>`,
+    title: 'Logopedie',
+    preview: 'Evaluarea și terapia abilităților de comunicare, limbaj și pronunție, atât pentru copii cât și pentru adulți.',
+    modal: `<p>În cadrul Sanus Clinic, serviciile de logopedie sunt dedicate evaluării, terapiei și dezvoltării abilităților de comunicare, limbaj și pronunție, atât pentru copii, cât și pentru adulți.</p>
+    <p>Prin ședințe personalizate și metode adaptate fiecărui pacient, intervenim în dificultăți precum pronunția incorectă a sunetelor, întârzieri în dezvoltarea limbajului, tulburări de vorbire, fluență, voce sau comunicare.</p>
+    <p>Obiectivul nostru este să construim, pas cu pas, o comunicare clară, naturală și încrezătoare, într-un mediu sigur, empatic și orientat spre progres real.</p>
+    <p><strong>Fiecare cuvânt rostit cu încredere poate schimba totul.</strong></p>`
+  },
+  psihologie: {
+    icon: `<svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z"/><path d="M9 9a3 3 0 0 1 5.12-2.12A3 3 0 0 1 15 9c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>`,
+    title: 'Psihologie clinică',
+    preview: 'Evaluarea și susținerea echilibrului emoțional și psihologic, într-un cadru sigur, confidențial și profesionist.',
+    modal: `<p>În cadrul Sanus Clinic, serviciile de psihologie clinică sunt dedicate evaluării, înțelegerii și susținerii echilibrului emoțional și psihologic, într-un cadru sigur, confidențial și profesionist.</p>
+    <p>Prin evaluare psihologică de specialitate și intervenții personalizate, oferim sprijin în gestionarea anxietății, stresului, dificultăților emoționale, schimbărilor de viață, problemelor de adaptare sau altor provocări care pot influența starea de bine și calitatea vieții.</p>
+    <p>La Sanus Clinic, credem că sănătatea mintală este la fel de importantă ca sănătatea fizică, iar fiecare persoană merită să fie ascultată, înțeleasă și ghidată cu empatie și profesionalism.</p>
+    <p><strong>Echilibrul interior începe atunci când alegi să ai grijă de tine.</strong></p>`
+  },
+  terapie_ocupationala: {
+    icon: `<svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>`,
+    title: 'Terapie ocupațională',
+    preview: 'Recuperarea și dezvoltarea abilităților necesare activităților zilnice, pentru o viață independentă și de calitate.',
+    modal: `<p>Terapia ocupațională la Sanus Clinic este dedicată persoanelor care, în urma unor afecțiuni, accidentări sau tulburări de dezvoltare, întâmpină dificultăți în desfășurarea activităților zilnice.</p>
+    <p>Prin evaluare funcțională și programe personalizate, terapeutul ocupațional lucrează pentru recuperarea sau dezvoltarea abilităților motorii, cognitive și senzoriale necesare independenței în viața de zi cu zi.</p>
+    <p>Ne adresăm atât copiilor cu tulburări de dezvoltare, cât și adulților aflați în recuperare după accident vascular, traumatism sau intervenție chirurgicală.</p>
+    <p><strong>Fiecare activitate redobândită este un pas spre independență.</strong></p>`
+  }
+};
+
+// Servicii per clinică
+const SERVICII_PER_CLINICA = {
+  crangasi: ['recuperare', 'ortopedie', 'terapie_ocupationala', 'logopedie', 'psihologie'],
+  mavrodin: ['medicina_interna', 'recuperare', 'analize']
+};
+
+
 const CLINICS = {
   crangasi: {
     name: 'Crângași', fullName: 'Sanus CLINIC Crângași', city: 'București',
@@ -2039,7 +2312,7 @@ const CLINICS = {
       {
         badge: 'Pachet popular',
         title: 'Pachet Eco Abd + Tiroidă + Analize',
-        items: ['Ecografie abdominală totală', 'Ecografie tiroidă', 'Analize interne incluse'],
+        items: ['Ecografie abdominală totală', 'Ecografie tiroidă', 'Interpretare analize'],
         oldPrice: null, price: '380 lei', featured: false
       },
       {
@@ -2128,6 +2401,9 @@ function selectClinic(key) {
   // 5. Render pachete
   renderPachete(clinic);
 
+  // 5b. Render servicii
+  renderServicii(key);
+
   // 6. Update pachete CTA phone
   const pCta = document.querySelector('.pachete-cta-call');
   if (pCta) { pCta.href = 'tel:' + clinic.phone; pCta.textContent = clinic.phoneDisplay;}
@@ -2141,8 +2417,142 @@ function selectClinic(key) {
 }
 
 // ============================================================
-// RENDER PACHETE
+// RENDER SERVICII
 // ============================================================
+function renderServicii(clinicKey) {
+  const grid = document.getElementById('serviciiCarousel');
+  const progMobile = document.getElementById('serviciiProgress');
+  const progDesktop = document.getElementById('serviciiDesktopDots');
+  if (!grid) return;
+
+  const keys = SERVICII_PER_CLINICA[clinicKey] || [];
+  const arrowSvg = `<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M5 12h14M13 5l7 7-7 7"/></svg>`;
+
+  grid.innerHTML = keys.map(key => {
+    const s = SERVICII[key];
+    if (!s) return '';
+    return `
+      <div class="serviciu reveal in" onclick="openModal('${key}')">
+        <div class="serviciu-icon">${s.icon}</div>
+        <h3>${s.title}</h3>
+        <p>${s.preview}</p>
+        <span class="serviciu-more">Află mai mult ${arrowSvg}</span>
+      </div>`;
+  }).join('');
+
+  // Dots mobile
+  if (progMobile) {
+    progMobile.innerHTML = keys.map((_, i) =>
+      `<button class="progress-dot ${i===0?'active':''}" data-index="${i}" aria-label="Serviciu ${i+1}"></button>`
+    ).join('');
+  }
+
+  // Reset mobile carousel
+  const prev = document.getElementById('serviciiPrev');
+  const next = document.getElementById('serviciiNext');
+  if (prev) prev.disabled = true;
+  if (next) next.disabled = keys.length <= 1;
+  grid.scrollLeft = 0;
+
+  // Init desktop carousel
+  setupDesktopCarousel(keys.length);
+
+  // Init mobile carousel
+  setupCarousel('serviciiCarousel', '#serviciiProgress .progress-dot', 'serviciiPrev', 'serviciiNext');
+}
+
+// ============================================================
+// DESKTOP CAROUSEL (transform-based, no scroll)
+// ============================================================
+function setupDesktopCarousel(totalCards) {
+  const grid = document.getElementById('serviciiCarousel');
+  const track = grid ? grid.closest('.servicii-carousel-track') : null;
+  const prevBtn = document.getElementById('serviciiPrevDesktop');
+  const nextBtn = document.getElementById('serviciiNextDesktop');
+  const dotsContainer = document.getElementById('serviciiDesktopDots');
+  if (!grid || !track) return;
+
+  const visible = 3;
+  let current = 0;
+
+  // Calculează și setează lățimea cardului bazat pe track
+  function setCardWidth() {
+    const gap = 20;
+    const trackW = track.offsetWidth;
+    const cardW = (trackW - gap * (visible - 1)) / visible;
+    grid.style.setProperty('--card-w', cardW + 'px');
+    return cardW + gap;
+  }
+
+  const maxIndex = Math.max(0, totalCards - visible);
+  const dotCount = maxIndex + 1;
+
+  if (dotsContainer) {
+    dotsContainer.innerHTML = Array.from({length: dotCount}, (_, i) =>
+      `<button class="progress-dot ${i===0?'active':''}" data-index="${i}" aria-label="Poziție ${i+1}"></button>`
+    ).join('');
+  }
+
+  function getCardWidth() {
+    return setCardWidth();
+  }
+
+  function goTo(index) {
+    current = Math.max(0, Math.min(index, maxIndex));
+    const cardW = getCardWidth();
+    grid.style.transition = 'transform 0.45s cubic-bezier(0.16, 1, 0.3, 1)';
+    grid.style.transform = `translateX(-${current * cardW}px)`;
+    if (prevBtn) prevBtn.disabled = current === 0;
+    if (nextBtn) nextBtn.disabled = current >= maxIndex;
+    document.querySelectorAll('#serviciiDesktopDots .progress-dot')
+      .forEach((d, i) => d.classList.toggle('active', i === current));
+  }
+
+  // Init: seteaza latimea si reseteaza pozitia
+  setCardWidth();
+  grid.style.transform = 'translateX(0)';
+  current = 0;
+
+  if (prevBtn) { prevBtn.disabled = true; prevBtn.onclick = () => goTo(current - 1); }
+  if (nextBtn) { nextBtn.disabled = maxIndex <= 0; nextBtn.onclick = () => goTo(current + 1); }
+  document.querySelectorAll('#serviciiDesktopDots .progress-dot')
+    .forEach((d, i) => { d.onclick = () => goTo(i); });
+
+  let resizeTimer;
+  window.addEventListener('resize', () => {
+    clearTimeout(resizeTimer);
+    resizeTimer = setTimeout(() => {
+      grid.style.transition = 'none';
+      setCardWidth();
+      goTo(current);
+    }, 100);
+  }, { passive: true });
+}
+
+// ============================================================
+// MODAL
+// ============================================================
+function openModal(key) {
+  const s = SERVICII[key];
+  if (!s) return;
+  const overlay = document.getElementById('serviciu-modal');
+  document.getElementById('modalIcon').innerHTML = s.icon;
+  document.getElementById('modal-title').textContent = s.title;
+  document.getElementById('modalBody').innerHTML = s.modal;
+  // Update CTA phone based on selected clinic
+  const clinic = CLINICS[window._selectedClinic];
+  const cta = document.getElementById('modalCta');
+  if (clinic && cta) cta.href = 'tel:' + clinic.phone;
+  overlay.classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeModal() {
+  document.getElementById('serviciu-modal').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+
 function renderPachete(clinic) {
   const grid = document.getElementById('pacheteCarousel');
   if (!grid) return;
@@ -2233,6 +2643,14 @@ document.addEventListener('DOMContentLoaded', () => {
     document.querySelectorAll('.nav-links a').forEach(l => l.addEventListener('click', () => { navLinks.classList.remove('active'); menuToggle.classList.remove('open'); }));
   }
   setupCarousel('serviciiCarousel', '#serviciiProgress .progress-dot', 'serviciiPrev', 'serviciiNext');
+
+  // Modal close listeners
+  document.getElementById('modalClose')?.addEventListener('click', closeModal);
+  document.getElementById('serviciu-modal')?.addEventListener('click', e => {
+    if (e.target === e.currentTarget) closeModal();
+  });
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+
   initSplash();
 });
 </script>
